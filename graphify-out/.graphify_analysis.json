@@ -1,0 +1,262 @@
+{
+  "communities": {
+    "0": [
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include",
+      "tsconfig_paths"
+    ],
+    "1": [
+      "lib_auth",
+      "lib_auth_admincontext",
+      "lib_auth_getadmincontext",
+      "lib_auth_getsessionuser",
+      "lib_auth_requireadmin",
+      "lib_auth_requireuser",
+      "lib_env",
+      "lib_env_env",
+      "lib_env_required",
+      "supabase_admin",
+      "supabase_client",
+      "supabase_client_createsupabasebrowserclient",
+      "supabase_server",
+      "supabase_server_createsupabaseserverclient"
+    ],
+    "2": [
+      "lib_auth_logactivity",
+      "lib_auth_loglogin",
+      "lib_settings",
+      "lib_settings_getpublicsettings",
+      "lib_settings_getsecret",
+      "lib_settings_getsetting",
+      "lib_settings_getsettingsmap",
+      "lib_settings_secretisconfigured",
+      "lib_settings_setsecret",
+      "lib_settings_settingsmap",
+      "lib_settings_updatesetting",
+      "supabase_admin_createsupabaseadminclient"
+    ],
+    "3": [
+      "package_dependencies",
+      "package_dependencies_dotenv",
+      "package_dependencies_lucide_react",
+      "package_dependencies_next",
+      "package_dependencies_nodemailer",
+      "package_dependencies_pg",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_sanitize_html",
+      "package_dependencies_supabase_ssr",
+      "package_dependencies_supabase_supabase_js",
+      "package_dependencies_zod"
+    ],
+    "4": [
+      "package",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_db_migrate",
+      "package_scripts_db_seed_admin",
+      "package_scripts_dev",
+      "package_scripts_start",
+      "package_scripts_typecheck",
+      "package_version"
+    ],
+    "5": [
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_postcss",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_nodemailer",
+      "package_devdependencies_types_pg",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_types_sanitize_html",
+      "package_devdependencies_typescript"
+    ],
+    "6": [
+      "agents_graphify",
+      "ref_add_watch",
+      "ref_exports",
+      "ref_extraction_spec",
+      "ref_github_merge",
+      "ref_hooks",
+      "ref_query",
+      "ref_transcribe",
+      "ref_update",
+      "skill_graphify"
+    ],
+    "7": [
+      "scripts_run_migrations",
+      "scripts_run_migrations_applied",
+      "scripts_run_migrations_client",
+      "scripts_run_migrations_files",
+      "scripts_run_migrations_migrationsdir"
+    ],
+    "8": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "9": [
+      "plugins_graphify",
+      "plugins_graphify_graphifyplugin"
+    ],
+    "10": [
+      "scripts_inspect_db",
+      "scripts_inspect_db_inspect"
+    ],
+    "11": [
+      "tailwind_config",
+      "tailwind_config_config"
+    ],
+    "12": [
+      "postcss_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.1,
+    "1": 0.26373626373626374,
+    "2": 0.24242424242424243,
+    "3": 0.16666666666666666,
+    "4": 0.18181818181818182,
+    "5": 0.18181818181818182,
+    "6": 0.24444444444444444,
+    "7": 0.4,
+    "8": 1.0,
+    "9": 1.0,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "supabase_admin_createsupabaseadminclient",
+      "label": "createSupabaseAdminClient()",
+      "degree": 10
+    },
+    {
+      "id": "skill_graphify",
+      "label": "Graphify Skill Specification",
+      "degree": 9
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 7
+    },
+    {
+      "id": "lib_env_env",
+      "label": "env()",
+      "degree": 7
+    },
+    {
+      "id": "lib_auth_getsessionuser",
+      "label": "getSessionUser()",
+      "degree": 4
+    },
+    {
+      "id": "lib_auth_getadmincontext",
+      "label": "getAdminContext()",
+      "degree": 4
+    },
+    {
+      "id": "supabase_server_createsupabaseserverclient",
+      "label": "createSupabaseServerClient()",
+      "degree": 4
+    },
+    {
+      "id": "lib_settings_getsecret",
+      "label": "getSecret()",
+      "degree": 3
+    },
+    {
+      "id": "ref_update",
+      "label": "Update and Cluster Reference",
+      "degree": 3
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Graphify Agent Instructions",
+      "target": "Graphify Skill Specification",
+      "source_files": [
+        "AGENTS.md",
+        ".opencode/skills/graphify/SKILL.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; peripheral node `Graphify Agent Instructions` unexpectedly reaches hub `Graphify Skill Specification`"
+    },
+    {
+      "source": "getAdminContext()",
+      "target": "createSupabaseAdminClient()",
+      "source_files": [
+        "src/lib/auth.ts",
+        "src/lib/supabase/admin.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "logActivity()",
+      "target": "createSupabaseAdminClient()",
+      "source_files": [
+        "src/lib/auth.ts",
+        "src/lib/supabase/admin.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `logActivity()` unexpectedly reaches hub `createSupabaseAdminClient()`"
+    },
+    {
+      "source": "logLogin()",
+      "target": "createSupabaseAdminClient()",
+      "source_files": [
+        "src/lib/auth.ts",
+        "src/lib/supabase/admin.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `logLogin()` unexpectedly reaches hub `createSupabaseAdminClient()`"
+    },
+    {
+      "source": "createSupabaseAdminClient()",
+      "target": "env()",
+      "source_files": [
+        "src/lib/supabase/admin.ts",
+        "src/lib/env.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 24552,
+    "output": 1454
+  }
+}
