@@ -685,13 +685,13 @@
     "semantic_hash": ""
   },
   "src/components/storefront/StoreFooter.tsx": {
-    "mtime": 1793828782.181926,
-    "ast_hash": "3172c2443761008529064c6f16fc1f6c",
+    "mtime": 1795461453.3007562,
+    "ast_hash": "df170e41f2a3c98c7592afb9dd99dcdb",
     "semantic_hash": ""
   },
   "src/components/storefront/StoreHeader.tsx": {
-    "mtime": 1795460883.6737404,
-    "ast_hash": "4c8d9a5ddbf48aa4feb56edbf7bcb761",
+    "mtime": 1795461518.3151977,
+    "ast_hash": "8e8e2d775f5d68090bcd3007c66dcc02",
     "semantic_hash": ""
   },
   "supabase/migrations/0007_remove_cms.sql": {

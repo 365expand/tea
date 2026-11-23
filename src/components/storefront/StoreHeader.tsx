@@ -16,6 +16,7 @@ import {
   HelpCircle,
   Mail,
   ArrowRight,
+  PackageCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -71,10 +72,10 @@ export function StoreHeader({
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentY = window.scrollY;
-          // Wide hysteresis: activate at > 75px, deactivate at < 20px to prevent any oscillation or vibration
+          // Hysteresis: activate compact at > 50px, return to normal at < 15px
           setIsScrolled((prev) => {
-            if (!prev && currentY > 75) return true;
-            if (prev && currentY < 20) return false;
+            if (!prev && currentY > 50) return true;
+            if (prev && currentY < 15) return false;
             return prev;
           });
           ticking = false;
@@ -115,6 +116,12 @@ export function StoreHeader({
 
   const knowMoreItems = [
     {
+      label: "Track Your Order",
+      url: "/track-order",
+      desc: "Live courier tracking with AWB & Order ID",
+      icon: PackageCheck,
+    },
+    {
       label: "FAQs",
       url: "/faqs",
       desc: "Steeping standards, shipping & storage guidance",
@@ -129,7 +136,7 @@ export function StoreHeader({
   ];
 
   return (
-    <header className="sticky top-0 z-40 select-none font-sans">
+    <header className="sticky top-0 z-40 select-none font-sans bg-white shadow-xs">
       {/* 1. Dismissible Top Announcement Bar */}
       <AnimatePresence>
         {!announcementDismissed && announcement?.title && (
@@ -169,17 +176,17 @@ export function StoreHeader({
         )}
       </AnimatePresence>
 
-      {/* 2. Main Navigation Bar (Full Width with Luxury Spacing, Zero Transparency on Mobile, Smooth Compact Transition) */}
+      {/* 2. Main Navigation Bar (Full Width, Zero Transparency, Normal Height at Top, Compact on Scroll) */}
       <div
-        className={`w-full bg-white transition-shadow duration-300 ${
+        className={`w-full bg-white transition-[box-shadow] duration-300 ${
           isScrolled
             ? "border-b border-stone-200/90 shadow-sm"
             : "border-b border-stone-200"
         }`}
       >
         <div
-          className={`w-full px-4 sm:px-6 lg:px-10 xl:px-14 flex items-center justify-between gap-3 sm:gap-6 transition-[height] duration-300 ease-out ${
-            isScrolled ? "h-14" : "h-15 sm:h-18"
+          className={`w-full px-4 sm:px-6 lg:px-10 xl:px-14 flex items-center justify-between gap-3 sm:gap-6 transition-[height] duration-300 ease-in-out ${
+            isScrolled ? "h-13 sm:h-14" : "h-16 sm:h-20"
           }`}
         >
           {/* Left: Mobile hamburger & Brand Logo */}
@@ -459,112 +466,123 @@ export function StoreHeader({
         )}
       </AnimatePresence>
 
-      {/* 4. Enhanced Mobile Menu Drawer (Solid Opaque White Background) */}
+      {/* 4. Enhanced Mobile Menu Drawer (Solid Opaque White Background + Dark Backdrop Overlay) */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22 }}
-            className="md:hidden border-t border-stone-200 bg-white px-5 py-5 space-y-4 shadow-2xl overflow-hidden"
-          >
-            {/* Primary Mobile Navigation Links */}
-            <nav className="space-y-1">
-              <Link
-                href="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-xl transition ${
-                  pathname === "/"
-                    ? "bg-brand-50 text-brand-900"
-                    : "text-stone-800 hover:bg-stone-50"
-                }`}
-              >
-                <span>Home</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
-              </Link>
+          <>
+            {/* Dim Backdrop Overlay to prevent background bleed-through */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="md:hidden fixed inset-0 top-16 bg-black/40 z-30"
+              aria-hidden="true"
+            />
 
-              <Link
-                href="/about-us"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-xl transition ${
-                  pathname === "/about-us"
-                    ? "bg-brand-50 text-brand-900"
-                    : "text-stone-800 hover:bg-stone-50"
-                }`}
-              >
-                <span>About</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
-              </Link>
-
-              <Link
-                href="/products"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-xl transition ${
-                  pathname.startsWith("/product")
-                    ? "bg-brand-50 text-brand-900"
-                    : "text-stone-800 hover:bg-stone-50"
-                }`}
-              >
-                <span>Shop All Tea</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
-              </Link>
-
-              {/* Know More Section (FAQs & Contact) */}
-              <div className="pt-3 border-t border-stone-100 mt-2 space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 px-3 block mb-1">
-                  Know More
-                </span>
-                {knowMoreItems.map((item) => (
-                  <Link
-                    key={item.url}
-                    href={item.url}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between py-2 px-3 text-xs rounded-xl transition ${
-                      pathname === item.url
-                        ? "bg-brand-50 text-brand-900 font-semibold"
-                        : "text-stone-700 hover:bg-stone-50"
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-                  </Link>
-                ))}
-              </div>
-
-              {/* Account & Support Section */}
-              <div className="pt-3 border-t border-stone-100 mt-2 space-y-1">
+            {/* Solid Drawer Content */}
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.22 }}
+              className="md:hidden border-t border-stone-200 bg-white px-5 py-5 space-y-4 shadow-2xl overflow-hidden relative z-40"
+            >
+              {/* Primary Mobile Navigation Links */}
+              <nav className="space-y-1">
                 <Link
-                  href="/track-order"
+                  href="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2 px-3 text-xs font-medium text-brand-800 hover:bg-brand-50 rounded-xl"
+                  className={`flex items-center justify-between py-2.5 px-3.5 text-sm font-semibold rounded-xl transition ${
+                    pathname === "/"
+                      ? "bg-brand-50 text-brand-900 font-bold"
+                      : "text-stone-900 hover:bg-stone-50"
+                  }`}
                 >
-                  <span>Track Order</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-500" />
+                  <span>Home</span>
+                  <ChevronRight className="w-4 h-4 text-stone-400" />
                 </Link>
 
-                {userEmail ? (
-                  <Link
-                    href="/account"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between py-2 px-3 text-xs font-medium text-stone-800 hover:bg-stone-50 rounded-xl"
-                  >
-                    <span>My Account ({userName || userEmail})</span>
-                    <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-                  </Link>
-                ) : (
-                  <Link
-                    href="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between py-2 px-3 text-xs font-semibold text-stone-800 hover:bg-stone-50 rounded-xl"
-                  >
-                    <span>Sign In to Account</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
-                  </Link>
-                )}
-              </div>
-            </nav>
-          </motion.div>
+                <Link
+                  href="/about-us"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between py-2.5 px-3.5 text-sm font-semibold rounded-xl transition ${
+                    pathname === "/about-us"
+                      ? "bg-brand-50 text-brand-900 font-bold"
+                      : "text-stone-900 hover:bg-stone-50"
+                  }`}
+                >
+                  <span>About</span>
+                  <ChevronRight className="w-4 h-4 text-stone-400" />
+                </Link>
+
+                <Link
+                  href="/products"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between py-2.5 px-3.5 text-sm font-semibold rounded-xl transition ${
+                    pathname.startsWith("/product")
+                      ? "bg-brand-50 text-brand-900 font-bold"
+                      : "text-stone-900 hover:bg-stone-50"
+                  }`}
+                >
+                  <span>Shop All Tea</span>
+                  <ChevronRight className="w-4 h-4 text-stone-400" />
+                </Link>
+
+                {/* Know More Section (Track Your Order, FAQs & Contact) */}
+                <div className="pt-3 border-t border-stone-100 mt-2 space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 px-3.5 block mb-1">
+                    Know More
+                  </span>
+                  {knowMoreItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.url}
+                        href={item.url}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex items-center justify-between py-2 px-3.5 text-xs rounded-xl transition ${
+                          pathname === item.url
+                            ? "bg-brand-50 text-brand-900 font-bold"
+                            : "text-stone-800 hover:bg-stone-50"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <Icon className="w-3.5 h-3.5 text-brand-700" />
+                          <span>{item.label}</span>
+                        </div>
+                        <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                {/* Account & Support Section */}
+                <div className="pt-3 border-t border-stone-100 mt-2 space-y-1">
+                  {userEmail ? (
+                    <Link
+                      href="/account"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between py-2 px-3.5 text-xs font-medium text-stone-800 hover:bg-stone-50 rounded-xl"
+                    >
+                      <span>My Account ({userName || userEmail})</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between py-2 px-3.5 text-xs font-semibold text-stone-900 hover:bg-stone-50 rounded-xl"
+                    >
+                      <span>Sign In to Account</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
+                    </Link>
+                  )}
+                </div>
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

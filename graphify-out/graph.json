@@ -4219,7 +4219,7 @@
       "label": "StoreHeaderProps",
       "file_type": "code",
       "source_file": "src/components/storefront/StoreHeader.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "storefront_storeheader_storeheaderprops",
       "community": 25,
@@ -4229,7 +4229,7 @@
       "label": "StoreHeader()",
       "file_type": "code",
       "source_file": "src/components/storefront/StoreHeader.tsx",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "storefront_storeheader_storeheader",
       "community": 25,
@@ -6299,9 +6299,9 @@
       "source_file": "src/app/(storefront)/about-us/page.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "about_us_page",
-      "target": "storefront_aboutsections_aboutterroirgallery",
-      "confidence_score": 1.0
+      "target": "storefront_aboutsections_aboutterroirgallery"
     },
     {
       "relation": "imports_from",
@@ -6332,9 +6332,9 @@
       "source_file": "src/app/(storefront)/about-us/page.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "about_us_page",
-      "target": "storefront_whyussection",
-      "confidence_score": 1.0
+      "target": "storefront_whyussection"
     },
     {
       "relation": "imports",
@@ -6343,9 +6343,9 @@
       "source_file": "src/app/(storefront)/about-us/page.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "about_us_page",
-      "target": "storefront_whyussection_whyussection",
-      "confidence_score": 1.0
+      "target": "storefront_whyussection_whyussection"
     },
     {
       "relation": "contains",
@@ -8224,9 +8224,9 @@
       "source_file": "src/app/(storefront)/page.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_page",
-      "target": "storefront_hometestimonialssection",
-      "confidence_score": 1.0
+      "target": "storefront_hometestimonialssection"
     },
     {
       "relation": "imports",
@@ -8235,9 +8235,9 @@
       "source_file": "src/app/(storefront)/page.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_page",
-      "target": "storefront_hometestimonialssection_hometestimonialssection",
-      "confidence_score": 1.0
+      "target": "storefront_hometestimonialssection_hometestimonialssection"
     },
     {
       "relation": "contains",
@@ -8311,9 +8311,9 @@
       "source_file": "src/app/(storefront)/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_page",
-      "target": "storefront_whyussection",
-      "confidence_score": 1.0
+      "target": "storefront_whyussection"
     },
     {
       "relation": "imports",
@@ -8322,9 +8322,9 @@
       "source_file": "src/app/(storefront)/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_page",
-      "target": "storefront_whyussection_whyussection",
-      "confidence_score": 1.0
+      "target": "storefront_whyussection_whyussection"
     },
     {
       "relation": "imports_from",
@@ -16409,9 +16409,9 @@
       "source_file": "src/components/storefront/AboutSections.tsx",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_aboutsections",
-      "target": "storefront_aboutsections_aboutterroirgallery",
-      "confidence_score": 1.0
+      "target": "storefront_aboutsections_aboutterroirgallery"
     },
     {
       "relation": "contains",
@@ -16775,9 +16775,9 @@
       "source_file": "src/components/storefront/HomeTestimonialsSection.tsx",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_hometestimonialssection",
-      "target": "storefront_hometestimonialssection_hometestimonialssection",
-      "confidence_score": 1.0
+      "target": "storefront_hometestimonialssection_hometestimonialssection"
     },
     {
       "relation": "contains",
@@ -16785,9 +16785,9 @@
       "source_file": "src/components/storefront/HomeTestimonialsSection.tsx",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_hometestimonialssection",
-      "target": "storefront_hometestimonialssection_hometestimonialssectionprops",
-      "confidence_score": 1.0
+      "target": "storefront_hometestimonialssection_hometestimonialssectionprops"
     },
     {
       "relation": "contains",
@@ -16795,9 +16795,9 @@
       "source_file": "src/components/storefront/HomeTestimonialsSection.tsx",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_hometestimonialssection",
-      "target": "storefront_hometestimonialssection_testimonialreview",
-      "confidence_score": 1.0
+      "target": "storefront_hometestimonialssection_testimonialreview"
     },
     {
       "relation": "imports_from",
@@ -17081,9 +17081,9 @@
       "source_file": "src/components/storefront/WhyUsSection.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "storefront_whyussection",
-      "target": "storefront_whyussection_whyussection",
-      "confidence_score": 1.0
+      "target": "storefront_whyussection_whyussection"
     },
     {
       "relation": "contains",
@@ -18715,5 +18715,5 @@
       "source_file": ".opencode/skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "1cce2628f5dc2d9ef4a8f20d072c187846e35f0b"
+  "built_at_commit": "e7e455eea3999d568aeadac5022eb49771ee425c"
 }

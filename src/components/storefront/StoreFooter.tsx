@@ -319,11 +319,19 @@ export function StoreFooter({
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-stone-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500">
+        {/* Bottom bar: Clean copyright and developer credits (Zero unverified claims) */}
+        <div className="mt-12 pt-6 border-t border-stone-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-400">
           <p>© {currentYear} {siteName}. All rights reserved.</p>
-          <p className="text-stone-400 font-serif italic text-xs">
-            Crafted for unadulterated, single-origin Indian tea connoisseurs.
+          <p className="flex items-center gap-1.5 text-xs text-stone-400">
+            <span>Developed by</span>
+            <a
+              href="https://365expand.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-200 hover:text-emerald-400 font-medium underline underline-offset-4 decoration-stone-600 hover:decoration-emerald-400 transition"
+            >
+              365 Expand Solutions
+            </a>
           </p>
         </div>
       </div>

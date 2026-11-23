@@ -95,7 +95,7 @@
     "semantic_hash": "b9faa59be46b9caa6cddf6c97a3c66b7"
   },
   "tailwind.config.ts": {
-    "mtime": 1795458851.5064092,
+    "mtime": 1795460001.098844,
     "ast_hash": "0cb2d247ab3010bdec241372bb2efe99",
     "semantic_hash": ""
   },
@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "src/app/(storefront)/about-us/page.tsx": {
-    "mtime": 1795459162.6934133,
-    "ast_hash": "a874bb308c99df81bcb086dfbb02791e",
+    "mtime": 1795461174.6508932,
+    "ast_hash": "33cb83cb21f1c64a027ba10b01587ac0",
     "semantic_hash": ""
   },
   "src/app/(storefront)/account/addresses/page.tsx": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "src/app/(storefront)/page.tsx": {
-    "mtime": 1795459144.5846834,
-    "ast_hash": "f5d5f7c62387629a7f1e8ede36112cd7",
+    "mtime": 1795461076.8426437,
+    "ast_hash": "8b7ec1a02ae684c2ebabec166c0ca38f",
     "semantic_hash": ""
   },
   "src/app/(storefront)/privacy-policy/page.tsx": {
@@ -565,7 +565,7 @@
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
-    "mtime": 1795458844.5776777,
+    "mtime": 1795459999.6780493,
     "ast_hash": "98899e2cf2346d3f5f8c6b4ed58a44e3",
     "semantic_hash": ""
   },
@@ -645,8 +645,8 @@
     "semantic_hash": ""
   },
   "src/components/storefront/AboutSections.tsx": {
-    "mtime": 1795459273.694854,
-    "ast_hash": "c5ba7be558553c510e2eee97ac93149e",
+    "mtime": 1795461157.449486,
+    "ast_hash": "300bec3f8226af9150ad3549754f60f5",
     "semantic_hash": ""
   },
   "src/components/storefront/CartDrawer.tsx": {
@@ -670,12 +670,12 @@
     "semantic_hash": ""
   },
   "src/components/storefront/ProductCard.tsx": {
-    "mtime": 1795459220.43267,
+    "mtime": 1795460000.5072958,
     "ast_hash": "7255a102182ce6ce12fea9b39663fa04",
     "semantic_hash": ""
   },
   "src/components/storefront/ProductDetailClient.tsx": {
-    "mtime": 1795459193.1778536,
+    "mtime": 1795460000.8357396,
     "ast_hash": "43eef656bdd42681a1a81252003dd660",
     "semantic_hash": ""
   },
@@ -690,8 +690,8 @@
     "semantic_hash": ""
   },
   "src/components/storefront/StoreHeader.tsx": {
-    "mtime": 1795458917.8473134,
-    "ast_hash": "e3ebc67b2003dca7de88eb2efdb1f43d",
+    "mtime": 1795460883.6737404,
+    "ast_hash": "4c8d9a5ddbf48aa4feb56edbf7bcb761",
     "semantic_hash": ""
   },
   "supabase/migrations/0007_remove_cms.sql": {
@@ -1975,7 +1975,7 @@
     "semantic_hash": ""
   },
   "src/components/storefront/EstateParallaxSection.tsx": {
-    "mtime": 1795459257.6290703,
+    "mtime": 1795460000.1326723,
     "ast_hash": "468f385dbbeb8417ba13c09072731d92",
     "semantic_hash": ""
   },
@@ -1995,8 +1995,38 @@
     "semantic_hash": ""
   },
   "src/components/storefront/HomeHeroSlider.tsx": {
-    "mtime": 1795459320.051534,
-    "ast_hash": "2da0d4724d141f30d872a72306ad7a56",
+    "mtime": 1795460884.3232107,
+    "ast_hash": "1e67e973cdeec099744a2492cc5afb9b",
+    "semantic_hash": ""
+  },
+  "src/components/storefront/HomeTestimonialsSection.tsx": {
+    "mtime": 1795461060.4961123,
+    "ast_hash": "50dc40557b1d5c7b63be53b92128cbc0",
+    "semantic_hash": ""
+  },
+  "src/components/storefront/WhyUsSection.tsx": {
+    "mtime": 1795461011.5751429,
+    "ast_hash": "a9f1d7249f297768ad8763f5cfc33921",
+    "semantic_hash": ""
+  },
+  "public/images/about/artisanal_orthodox_withering.jpg": {
+    "mtime": 1793823993.7396474,
+    "ast_hash": "f49b951ea5df525e098dbbda4e9ee2e9",
+    "semantic_hash": ""
+  },
+  "public/images/about/chai_botanical_spices.jpg": {
+    "mtime": 1793823974.6159215,
+    "ast_hash": "65b565470a6c052554747af0e97d5694",
+    "semantic_hash": ""
+  },
+  "public/images/about/himalayan_terroir_harvest.jpg": {
+    "mtime": 1793824744.3424225,
+    "ast_hash": "9dc644f545ccdf240a22b34111631d76",
+    "semantic_hash": ""
+  },
+  "public/images/about/tea_master_cupping_ritual.jpg": {
+    "mtime": 1793823958.340412,
+    "ast_hash": "015fb59af45ce1f0c3c2e73c048a32c2",
     "semantic_hash": ""
   }
 }
