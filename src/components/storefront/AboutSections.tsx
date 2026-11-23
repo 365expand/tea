@@ -18,35 +18,35 @@ export function AboutPillars() {
   const pillars = [
     {
       icon: Leaf,
-      title: "100% Single-Estate",
-      subtitle: "Never Bulk-Blended",
+      title: "Single-Estate Sourcing",
+      subtitle: "Distinct Micro-Lots",
       description:
-        "Every batch originates from a verified, high-altitude mountain estate in Assam or Darjeeling. We never blend harvests with cheaper industrial dust or sweepings.",
+        "Every batch originates from carefully selected high-altitude estates in Assam and Darjeeling. We celebrate the authentic terroir of regional Himalayan gardens.",
       tag: "Pure Terroir",
     },
     {
       icon: ShieldCheck,
-      title: "Zero Artificial Scents",
-      subtitle: "No Spray Aromas",
+      title: "Natural Craftsmanship",
+      subtitle: "Unadulterated Leaves",
       description:
-        "We strictly reject chemical spray-on essences, synthetic oils, and artificial colorants. The rich aroma in your cup comes 100% from living tea leaf terpenes.",
-      tag: "Lab Tested",
+        "We reject synthetic additives and artificial flavor sprays. The nuanced fragrance in your cup stems genuinely from handcrafted tea leaves and whole botanical spices.",
+      tag: "Small Batch",
     },
     {
       icon: Clock,
-      title: "48-Hour Garden Pack",
-      subtitle: "Peak Volatile Oils",
+      title: "Direct Garden Freshness",
+      subtitle: "Preserved Terroir",
       description:
-        "While commercial supermarket teas sit in auction warehouses for months losing their aroma, our leaves are sealed within 48 hours of harvest in multi-layer airtight pouches.",
-      tag: "Garden Fresh",
+        "Bypassing long holding warehouses, our freshly harvested leaves are promptly sealed in airtight protective pouches to maintain their natural botanical vitality.",
+      tag: "Estate Packed",
     },
     {
       icon: HeartHandshake,
-      title: "Direct Grower Equity",
-      subtitle: "35% Above Auction",
+      title: "Grower Equity & Care",
+      subtitle: "Fair Partnerships",
       description:
-        "We partner directly with heritage tea garden pluckers and family estates, bypassing brokers and supporting living wages, healthcare, and mountain community schools.",
-      tag: "Fair Trade",
+        "We foster direct relationships with regional tea pluckers and estate workers, promoting sustainable mountain agriculture and respectful compensation.",
+      tag: "Ethical Trade",
     },
   ];
 
@@ -90,7 +90,7 @@ export function AboutPillars() {
 
                 <div className="pt-5 border-t border-stone-100 mt-5 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  Guaranteed Authentic
+                  Artisanal Provenance
                 </div>
               </div>
             );
@@ -200,9 +200,9 @@ export function AboutProcessTimeline() {
 export function AboutImpactStats() {
   const stats = [
     { value: "4,500+", unit: "FT", label: "Average Garden Elevation", desc: "High alpine estates with morning mist" },
-    { value: "100%", unit: "PURITY", label: "Whole Leaf Authenticity", desc: "Zero dust, sweepings, or artificial extracts" },
-    { value: "48", unit: "HOURS", label: "Harvest to Sealed Pouch", desc: "Locked-in fresh natural volatile terpenes" },
-    { value: "35%", unit: "PREMIUM", label: "Above Fairtrade Minimums", desc: "Directly empowering mountain grower families" },
+    { value: "WHOLE", unit: "LEAF", label: "Artisanal Selection", desc: "Hand-sorted unbroken leaves & whole spices" },
+    { value: "FRESH", unit: "SEAL", label: "Sealed At Harvest", desc: "Locking in natural aromatic volatile oils" },
+    { value: "DIRECT", unit: "TRADE", label: "Grower Equity", desc: "Directly partnering with mountain grower families" },
   ];
 
   return (

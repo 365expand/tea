@@ -15,7 +15,7 @@ import {
   ChevronRight,
   HelpCircle,
   Mail,
-  Info,
+  ArrowRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -36,11 +36,13 @@ export function StoreHeader({
   const pathname = usePathname();
   const { itemCount, setIsDrawerOpen } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [knowMoreOpen, setKnowMoreOpen] = useState(false);
   const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Check if announcement was previously dismissed in this session
   useEffect(() => {
@@ -49,7 +51,7 @@ export function StoreHeader({
         setAnnouncementDismissed(true);
       }
     } catch (e) {
-      // ignore in environments where sessionStorage is blocked
+      // ignore
     }
   }, []);
 
@@ -62,12 +64,24 @@ export function StoreHeader({
     }
   };
 
-  // Track scroll position to slim down header width and height
+  // Track scroll position cleanly with hysteresis to prevent blinking/layout jitter
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 25);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentY = window.scrollY;
+          // Hysteresis: activate at > 40px, deactivate at < 15px to prevent oscillation
+          setIsScrolled((prev) => {
+            if (!prev && currentY > 40) return true;
+            if (prev && currentY < 15) return false;
+            return prev;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -83,21 +97,23 @@ export function StoreHeader({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Close dropdown on route change
+  // Close dropdown and search on route change
   useEffect(() => {
     setKnowMoreOpen(false);
     setMobileMenuOpen(false);
+    setMobileSearchOpen(false);
   }, [pathname]);
+
+  // Focus mobile search input when opened
+  useEffect(() => {
+    if (mobileSearchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 100);
+    }
+  }, [mobileSearchOpen]);
 
   const websiteName = generalSettings?.website_name || "Pure Pour Co.";
 
   const knowMoreItems = [
-    {
-      label: "About Us",
-      url: "/about-us",
-      desc: "Single-estate heritage & direct garden sourcing",
-      icon: Info,
-    },
     {
       label: "FAQs",
       url: "/faqs",
@@ -113,7 +129,7 @@ export function StoreHeader({
   ];
 
   return (
-    <header className="sticky top-0 z-40 select-none transition-all duration-300">
+    <header className="sticky top-0 z-40 select-none font-sans">
       {/* 1. Dismissible Top Announcement Bar */}
       <AnimatePresence>
         {!announcementDismissed && announcement?.title && (
@@ -121,10 +137,10 @@ export function StoreHeader({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="bg-brand-950 text-stone-200 text-[11px] font-medium tracking-wide relative overflow-hidden border-b border-brand-900/60"
           >
-            <div className="max-w-7xl mx-auto px-8 py-2 flex items-center justify-center text-center relative">
+            <div className="w-full px-4 sm:px-8 lg:px-12 py-2 flex items-center justify-center text-center relative">
               {announcement.link_url ? (
                 <Link
                   href={announcement.link_url}
@@ -153,99 +169,84 @@ export function StoreHeader({
         )}
       </AnimatePresence>
 
-      {/* 2. Main Navigation Bar (Slims down & narrows width on scroll) */}
+      {/* 2. Main Navigation Bar (Full Width with Luxury Spacing, Zero Blink) */}
       <div
-        className={`w-full transition-all duration-300 ${
+        className={`w-full transition-all duration-200 ${
           isScrolled
             ? "bg-white/95 backdrop-blur-md border-b border-stone-200/90 shadow-xs"
             : "bg-white border-b border-stone-200"
         }`}
       >
-        <div
-          className={`mx-auto px-4 sm:px-6 transition-all duration-300 flex items-center justify-between gap-3 sm:gap-6 ${
-            isScrolled
-              ? "max-w-5xl lg:max-w-6xl h-12"
-              : "max-w-7xl h-16 sm:h-18"
-          }`}
-        >
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 h-16 sm:h-18 flex items-center justify-between gap-3 sm:gap-6">
           {/* Left: Mobile hamburger & Brand Logo */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 -ml-2 text-stone-700 hover:text-stone-900"
+              className="md:hidden p-2 -ml-1 text-stone-700 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            <Link href="/" className="flex items-center gap-2.5 group">
+            {/* Logo Area: Montserrat 300, no subtitle, clean balanced alignment */}
+            <Link href="/" className="flex items-center gap-2.5 group py-1">
               {generalSettings?.logo_url ? (
                 <img
                   src={generalSettings.logo_url}
                   alt={websiteName}
-                  className={`w-auto object-contain transition-all duration-300 ${
-                    isScrolled ? "h-6 sm:h-7" : "h-8 sm:h-9"
-                  }`}
+                  className="w-auto h-7 sm:h-8 object-contain transition-transform group-hover:scale-105"
                 />
               ) : (
-                <div
-                  className={`rounded-xl bg-brand-800 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform ${
-                    isScrolled ? "w-6 h-6" : "w-8 h-8"
-                  }`}
-                >
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-brand-800 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                   <Leaf className="w-4 h-4" />
                 </div>
               )}
-              <div>
-                <span
-                  className={`font-bold tracking-tight text-stone-900 block leading-tight font-serif transition-all duration-300 ${
-                    isScrolled ? "text-xs sm:text-sm" : "text-base sm:text-lg"
-                  }`}
-                >
-                  {websiteName}
-                </span>
-                <span
-                  className={`text-stone-400 block tracking-normal font-sans transition-all duration-300 ${
-                    isScrolled ? "text-[9px] -mt-0.5" : "text-[10px] -mt-0.5"
-                  }`}
-                >
-                  Single-Origin Tea
-                </span>
-              </div>
+              <span className="font-montserrat font-light text-base sm:text-lg lg:text-xl text-stone-900 tracking-wide leading-none transition-colors group-hover:text-brand-900">
+                {websiteName}
+              </span>
             </Link>
           </div>
 
-          {/* Center: Desktop Navigation Links + "Know More" Dropdown */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-xs font-semibold text-stone-700">
+          {/* Center: Desktop Navigation Links: Home, About, Shop All Tea, Know More (FAQ & Contact) */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-9 text-xs sm:text-sm font-medium text-stone-700">
             <Link
               href="/"
-              className={`hover:text-brand-800 transition ${
-                pathname === "/" ? "text-brand-800 font-bold" : ""
+              className={`hover:text-brand-800 transition py-1 relative ${
+                pathname === "/" ? "text-brand-800 font-semibold" : ""
               }`}
             >
               Home
+              {pathname === "/" && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-800 rounded-full" />
+              )}
+            </Link>
+
+            <Link
+              href="/about-us"
+              className={`hover:text-brand-800 transition py-1 relative ${
+                pathname === "/about-us" ? "text-brand-800 font-semibold" : ""
+              }`}
+            >
+              About
+              {pathname === "/about-us" && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-800 rounded-full" />
+              )}
             </Link>
 
             <Link
               href="/products"
-              className={`hover:text-brand-800 transition ${
-                pathname.startsWith("/product") ? "text-brand-800 font-bold" : ""
+              className={`hover:text-brand-800 transition py-1 relative ${
+                pathname.startsWith("/product") ? "text-brand-800 font-semibold" : ""
               }`}
             >
-              Shop All Teas
+              Shop All Tea
+              {pathname.startsWith("/product") && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-800 rounded-full" />
+              )}
             </Link>
 
-            <Link
-              href="/categories"
-              className={`hover:text-brand-800 transition ${
-                pathname.startsWith("/categor") ? "text-brand-800 font-bold" : ""
-              }`}
-            >
-              Collections
-            </Link>
-
-            {/* "Know More" Dropdown Menu */}
+            {/* "Know More" Dropdown Menu (FAQs and Contact only) */}
             <div
               ref={dropdownRef}
               className="relative"
@@ -255,12 +256,9 @@ export function StoreHeader({
               <button
                 type="button"
                 onClick={() => setKnowMoreOpen((prev) => !prev)}
-                className={`flex items-center gap-1.5 py-2 hover:text-brand-800 transition ${
-                  knowMoreOpen ||
-                  pathname === "/about-us" ||
-                  pathname === "/faqs" ||
-                  pathname === "/contact"
-                    ? "text-brand-800 font-bold"
+                className={`flex items-center gap-1.5 py-1 hover:text-brand-800 transition ${
+                  knowMoreOpen || pathname === "/faqs" || pathname === "/contact"
+                    ? "text-brand-800 font-semibold"
                     : ""
                 }`}
                 aria-expanded={knowMoreOpen}
@@ -276,10 +274,10 @@ export function StoreHeader({
               <AnimatePresence>
                 {knowMoreOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    initial={{ opacity: 0, y: 6, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                    transition={{ duration: 0.18, ease: "easeOut" }}
+                    exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
                     className="absolute top-full left-0 w-72 bg-white rounded-2xl border border-stone-200 shadow-xl p-2 z-50 mt-1"
                   >
                     <div className="space-y-1">
@@ -317,9 +315,9 @@ export function StoreHeader({
             </div>
           </nav>
 
-          {/* Right: Big Search Input, Account & Cart */}
+          {/* Right: Search, Account & Cart */}
           <div className="flex items-center gap-2 sm:gap-3.5">
-            {/* Enlarged Prominent Search Bar */}
+            {/* Desktop Search Bar */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -337,11 +335,7 @@ export function StoreHeader({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search single-origin teas, spices..."
-                className={`pl-10 pr-8 bg-stone-100/90 hover:bg-stone-100 focus:bg-white border border-stone-200 rounded-full text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-600 transition-all duration-300 ${
-                  isScrolled
-                    ? "w-44 md:w-52 lg:w-60 py-1 text-xs"
-                    : "w-56 md:w-64 lg:w-80 py-2 text-xs"
-                }`}
+                className="w-52 md:w-64 lg:w-72 pl-10 pr-8 py-2 bg-stone-100/90 hover:bg-stone-100 focus:bg-white border border-stone-200 rounded-full text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-600 transition-all duration-200"
               />
               {searchQuery && (
                 <button
@@ -354,11 +348,11 @@ export function StoreHeader({
               )}
             </form>
 
-            {/* Account link */}
+            {/* Desktop Account link */}
             {userEmail ? (
               <Link
                 href="/account"
-                className="flex items-center gap-1.5 text-xs font-semibold text-stone-700 hover:text-brand-800 py-1.5 px-2.5 rounded-full hover:bg-stone-100 transition"
+                className="hidden sm:flex items-center gap-1.5 text-xs font-medium text-stone-700 hover:text-brand-800 py-1.5 px-3 rounded-full hover:bg-stone-100 transition"
               >
                 <User className="w-4 h-4 text-stone-500" />
                 <span className="hidden lg:inline truncate max-w-[100px]">
@@ -368,19 +362,27 @@ export function StoreHeader({
             ) : (
               <Link
                 href="/login"
-                className="text-xs font-semibold text-stone-700 hover:text-brand-800 py-1.5 px-3 rounded-full hover:bg-stone-100 transition hidden sm:inline-block"
+                className="text-xs font-medium text-stone-700 hover:text-brand-800 py-1.5 px-3 rounded-full hover:bg-stone-100 transition hidden sm:inline-block"
               >
                 Sign In
               </Link>
             )}
 
+            {/* Mobile Search Icon Button (Placed BEFORE Cart) */}
+            <button
+              type="button"
+              onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+              className="sm:hidden p-2 text-stone-700 hover:text-stone-900 hover:bg-stone-100 rounded-full transition"
+              aria-label="Toggle mobile search"
+            >
+              <Search className="w-5 h-5 text-stone-700" />
+            </button>
+
             {/* Cart Drawer Trigger */}
             <button
               type="button"
               onClick={() => setIsDrawerOpen(true)}
-              className={`flex items-center gap-2 bg-stone-900 hover:bg-stone-800 active:scale-95 text-white rounded-full text-xs font-semibold transition-all shadow-sm ${
-                isScrolled ? "px-3 py-1 text-[11px]" : "px-3.5 py-1.5 sm:py-2 text-xs"
-              }`}
+              className="flex items-center gap-2 bg-stone-900 hover:bg-stone-800 active:scale-95 text-white rounded-full px-3.5 py-1.5 sm:py-2 text-xs font-semibold transition-all shadow-sm"
               aria-label="View shopping bag"
             >
               <ShoppingBag className="w-3.5 h-3.5 text-amber-300" />
@@ -393,16 +395,16 @@ export function StoreHeader({
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* 3. Mobile Expandable Search Bar (Activated on Mobile Search Icon Click) */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {mobileSearchOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-stone-200 bg-white px-4 py-4 space-y-4 shadow-xl overflow-hidden"
+            transition={{ duration: 0.18 }}
+            className="sm:hidden bg-stone-50 border-b border-stone-200 px-4 py-2.5 overflow-hidden"
           >
-            {/* Mobile Search */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -412,50 +414,101 @@ export function StoreHeader({
                   )}`;
                 }
               }}
-              className="relative"
+              className="relative flex items-center gap-2"
             >
-              <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search teas, spices, ware..."
-                className="w-full pl-10 pr-3 py-2 text-xs bg-stone-100 border border-stone-200 rounded-xl focus:outline-none focus:border-brand-600"
-              />
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search single-origin teas, spices..."
+                  className="w-full pl-9 pr-8 py-2 text-xs bg-white border border-stone-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-700/20 focus:border-brand-600"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 p-0.5"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="px-3.5 py-2 bg-stone-900 text-white text-xs font-semibold rounded-full shrink-0"
+              >
+                Go
+              </button>
+              <button
+                type="button"
+                onClick={() => setMobileSearchOpen(false)}
+                className="p-1.5 text-stone-500 hover:text-stone-800"
+                aria-label="Close search"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            {/* Mobile Primary Links */}
+      {/* 4. Enhanced Mobile Menu Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22 }}
+            className="md:hidden border-t border-stone-200 bg-white/98 backdrop-blur-md px-5 py-5 space-y-4 shadow-2xl overflow-hidden"
+          >
+            {/* Primary Mobile Navigation Links */}
             <nav className="space-y-1">
               <Link
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 text-xs font-semibold text-stone-800 hover:bg-stone-100 rounded-lg"
+                className={`flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-xl transition ${
+                  pathname === "/"
+                    ? "bg-brand-50 text-brand-900"
+                    : "text-stone-800 hover:bg-stone-50"
+                }`}
               >
                 <span>Home</span>
-                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-stone-400" />
+              </Link>
+
+              <Link
+                href="/about-us"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-xl transition ${
+                  pathname === "/about-us"
+                    ? "bg-brand-50 text-brand-900"
+                    : "text-stone-800 hover:bg-stone-50"
+                }`}
+              >
+                <span>About</span>
+                <ChevronRight className="w-4 h-4 text-stone-400" />
               </Link>
 
               <Link
                 href="/products"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 text-xs font-semibold text-stone-800 hover:bg-stone-100 rounded-lg"
+                className={`flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-xl transition ${
+                  pathname.startsWith("/product")
+                    ? "bg-brand-50 text-brand-900"
+                    : "text-stone-800 hover:bg-stone-50"
+                }`}
               >
-                <span>Shop All Teas</span>
-                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                <span>Shop All Tea</span>
+                <ChevronRight className="w-4 h-4 text-stone-400" />
               </Link>
 
-              <Link
-                href="/categories"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 text-xs font-semibold text-stone-800 hover:bg-stone-100 rounded-lg"
-              >
-                <span>Collections</span>
-                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-              </Link>
-
-              {/* Know More Sub-links in Mobile */}
-              <div className="pt-2 border-t border-stone-100 mt-2 space-y-1">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-stone-400 px-3 block">
+              {/* Know More Section (FAQs & Contact) */}
+              <div className="pt-3 border-t border-stone-100 mt-2 space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 px-3 block mb-1">
                   Know More
                 </span>
                 {knowMoreItems.map((item) => (
@@ -463,7 +516,11 @@ export function StoreHeader({
                     key={item.url}
                     href={item.url}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between py-2 px-3 text-xs text-stone-700 hover:bg-stone-100 rounded-lg"
+                    className={`flex items-center justify-between py-2 px-3 text-xs rounded-xl transition ${
+                      pathname === item.url
+                        ? "bg-brand-50 text-brand-900 font-semibold"
+                        : "text-stone-700 hover:bg-stone-50"
+                    }`}
                   >
                     <span>{item.label}</span>
                     <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
@@ -471,24 +528,34 @@ export function StoreHeader({
                 ))}
               </div>
 
-              <div className="pt-2 border-t border-stone-100 mt-2 space-y-1">
+              {/* Account & Support Section */}
+              <div className="pt-3 border-t border-stone-100 mt-2 space-y-1">
                 <Link
                   href="/track-order"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2 px-3 text-xs font-medium text-brand-800 hover:bg-brand-50 rounded-lg"
+                  className="flex items-center justify-between py-2 px-3 text-xs font-medium text-brand-800 hover:bg-brand-50 rounded-xl"
                 >
                   <span>Track Order</span>
                   <ChevronRight className="w-3.5 h-3.5 text-brand-500" />
                 </Link>
 
-                {!userEmail && (
+                {userEmail ? (
+                  <Link
+                    href="/account"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between py-2 px-3 text-xs font-medium text-stone-800 hover:bg-stone-50 rounded-xl"
+                  >
+                    <span>My Account ({userName || userEmail})</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                  </Link>
+                ) : (
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between py-2 px-3 text-xs font-medium text-stone-800 hover:bg-stone-100 rounded-lg"
+                    className="flex items-center justify-between py-2 px-3 text-xs font-semibold text-stone-800 hover:bg-stone-50 rounded-xl"
                   >
                     <span>Sign In to Account</span>
-                    <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                    <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
                   </Link>
                 )}
               </div>

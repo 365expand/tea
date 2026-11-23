@@ -75,22 +75,22 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   };
 
   return (
-    <div className="group bg-white border border-stone-200/90 rounded-2xl overflow-hidden shadow-xs hover:shadow-xl hover:border-stone-300 transition-all duration-300 flex flex-col justify-between">
-      <Link href={`/product/${product.slug}`} className="block relative">
+    <div className="group bg-white border border-stone-200/80 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xs hover:shadow-xl hover:border-brand-200 transition-all duration-300 flex flex-col justify-between font-sans">
+      <Link href={`/product/${product.slug}`} className="block relative overflow-hidden">
         {/* Top Badges */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1 items-start">
           {hasDiscount && (
-            <span className="bg-rose-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+            <span className="bg-rose-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full tracking-wider shadow-xs">
               Save {Math.round(((regularPrice - price) / regularPrice) * 100)}%
             </span>
           )}
           {product.is_featured && !hasDiscount && (
-            <span className="bg-stone-900 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full tracking-wider shadow-xs">
-              Estate Lot
+            <span className="bg-stone-900/90 backdrop-blur-xs text-white text-[10px] font-semibold px-2.5 py-0.5 rounded-full tracking-wider shadow-xs">
+              Reserve Lot
             </span>
           )}
           {isOutOfStock && (
-            <span className="bg-stone-800 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase">
+            <span className="bg-stone-800 text-white text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               Sold Out
             </span>
           )}
@@ -99,7 +99,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         {/* Top Right Net Quantity Tag */}
         {product.net_quantity && (
           <div className="absolute top-3 right-3 z-10">
-            <span className="bg-stone-950/60 backdrop-blur-xs text-stone-100 text-[10px] font-mono font-medium px-2 py-0.5 rounded-md border border-white/20 shadow-xs">
+            <span className="bg-stone-900/65 backdrop-blur-md text-stone-100 text-[10px] font-mono font-medium px-2 py-0.5 rounded-md border border-white/10 shadow-xs">
               {product.net_quantity}
             </span>
           </div>
@@ -111,7 +111,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             <img
               src={product.featured_image_url}
               alt={product.name}
-              className="w-full h-full object-cover object-center group-hover:scale-106 transition-transform duration-600 ease-out"
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
               loading="lazy"
             />
           ) : (
@@ -123,7 +123,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             </div>
           )}
 
-          <div className="absolute inset-0 bg-stone-950/0 group-hover:bg-stone-950/5 transition-colors" />
+          <div className="absolute inset-0 bg-stone-950/0 group-hover:bg-stone-950/5 transition-colors duration-300" />
         </div>
       </Link>
 
@@ -133,12 +133,12 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           {/* Category & Concise Review Shorts */}
           <div className="flex items-center justify-between gap-2">
             {categoryName ? (
-              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 font-semibold truncate">
+              <span className="text-[10px] uppercase tracking-wider text-stone-500 font-semibold truncate bg-stone-100 px-2 py-0.5 rounded-md">
                 {categoryName}
               </span>
             ) : (
-              <span className="text-[10px] font-mono uppercase tracking-wider text-stone-400">
-                Artisanal Tea
+              <span className="text-[10px] uppercase tracking-wider text-stone-400 bg-stone-100 px-2 py-0.5 rounded-md">
+                Whole Leaf
               </span>
             )}
 
@@ -165,7 +165,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           </div>
 
           {/* Product Name */}
-          <h3 className="font-serif font-medium text-sm sm:text-base text-stone-900 group-hover:text-emerald-900 transition-colors line-clamp-2 leading-snug">
+          <h3 className="font-semibold text-sm sm:text-base text-stone-900 group-hover:text-brand-800 transition-colors line-clamp-2 leading-snug">
             <Link href={`/product/${product.slug}`}>
               {product.name}
             </Link>
@@ -189,11 +189,11 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             type="button"
             onClick={handleAddToCart}
             disabled={isOutOfStock}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 shadow-xs active:scale-95 ${
               isOutOfStock
                 ? "bg-stone-100 text-stone-400 cursor-not-allowed"
                 : added
-                ? "bg-emerald-600 text-white"
+                ? "bg-brand-700 text-white"
                 : "bg-stone-900 hover:bg-stone-800 text-white"
             }`}
           >
@@ -206,7 +206,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
               <span>Sold Out</span>
             ) : (
               <>
-                <ShoppingBag className="w-3.5 h-3.5" />
+                <ShoppingBag className="w-3.5 h-3.5 text-amber-300" />
                 <span>Add</span>
               </>
             )}

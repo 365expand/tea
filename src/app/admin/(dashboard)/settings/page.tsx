@@ -24,6 +24,7 @@ export default async function AdminSettingsPage() {
 
   const initialData: SettingsMap = {
     general: settingsMap.general || {},
+    hero_slider: settingsMap.hero_slider || { slides: [] },
     seo: settingsMap.seo || {},
     social: settingsMap.social || {},
     contact: settingsMap.contact || {},

@@ -19,10 +19,16 @@ import {
   ShieldCheck,
   Sparkles,
   Info,
+  Plus,
+  Trash2,
+  ArrowUp,
+  ArrowDown,
+  Image as ImageIcon,
 } from "lucide-react";
 
 export type SettingsMap = {
   general: any;
+  hero_slider?: any;
   seo: any;
   social: any;
   contact: any;
@@ -42,6 +48,7 @@ export function SettingsManager({ initialData }: { initialData: SettingsMap }) {
   const router = useRouter();
   const [tab, setTab] = useState<
     | "general"
+    | "hero_slider"
     | "seo"
     | "social"
     | "contact"
@@ -55,6 +62,7 @@ export function SettingsManager({ initialData }: { initialData: SettingsMap }) {
 
   // Setting states
   const [general, setGeneral] = useState(initialData.general || {});
+  const [heroSlider, setHeroSlider] = useState(initialData.hero_slider || { slides: [] });
   const [seo, setSeo] = useState(initialData.seo || {});
   const [social, setSocial] = useState(initialData.social || {});
   const [contact, setContact] = useState(initialData.contact || {});
@@ -276,6 +284,7 @@ export function SettingsManager({ initialData }: { initialData: SettingsMap }) {
 
   const tabs = [
     { key: "general", label: "General", icon: Globe },
+    { key: "hero_slider", label: "Hero Banner Slider", icon: ImageIcon },
     { key: "seo", label: "SEO", icon: Sparkles },
     { key: "social", label: "Social Media", icon: Share2 },
     { key: "contact", label: "Contact Info", icon: Mail },
@@ -426,6 +435,215 @@ export function SettingsManager({ initialData }: { initialData: SettingsMap }) {
                 </button>
               </div>
             </form>
+          )}
+
+          {/* TAB: HERO SLIDER */}
+          {tab === "hero_slider" && (
+            <div className="space-y-4 text-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">
+                    Home Page Hero Banner Slider
+                  </h3>
+                  <p className="text-slate-500 text-[11px] mt-0.5">
+                    Upload image banners for Desktop and Mobile (no HTML text; design text directly inside your banner images).
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newSlide = {
+                      id: "slide-" + Date.now(),
+                      desktop_image_url: "",
+                      mobile_image_url: "",
+                      link_url: "/products",
+                      alt_text: "Pure Pour Co. Promotion",
+                      is_active: true,
+                    };
+                    setHeroSlider({
+                      ...heroSlider,
+                      slides: [...(heroSlider.slides || []), newSlide],
+                    });
+                  }}
+                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-xs flex items-center gap-1.5 transition"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Slide</span>
+                </button>
+              </div>
+
+              {(!heroSlider.slides || heroSlider.slides.length === 0) ? (
+                <div className="text-center py-10 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-slate-500">
+                  <ImageIcon className="w-8 h-8 mx-auto text-slate-300 mb-2" />
+                  <p className="font-semibold text-slate-700">No Hero Slides Added</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Click &ldquo;Add Slide&rdquo; above to upload your first desktop &amp; mobile promotion banners.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {heroSlider.slides.map((slide: any, idx: number) => (
+                    <div
+                      key={slide.id || idx}
+                      className="border border-slate-200 rounded-xl p-4 bg-slate-50/50 space-y-3 relative group"
+                    >
+                      <div className="flex items-center justify-between pb-2 border-b border-slate-200/80">
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[11px] font-bold flex items-center justify-center">
+                            {idx + 1}
+                          </span>
+                          <span className="font-bold text-slate-800 text-xs">
+                            {slide.alt_text || `Slide #${idx + 1}`}
+                          </span>
+                          {slide.is_active === false && (
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-rose-50 text-rose-600 border border-rose-200">
+                              Inactive
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            disabled={idx === 0}
+                            onClick={() => {
+                              const newSlides = [...heroSlider.slides];
+                              const temp = newSlides[idx - 1];
+                              newSlides[idx - 1] = newSlides[idx];
+                              newSlides[idx] = temp;
+                              setHeroSlider({ ...heroSlider, slides: newSlides });
+                            }}
+                            className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-30 rounded hover:bg-slate-200/60"
+                            title="Move Up"
+                          >
+                            <ArrowUp className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            disabled={idx === heroSlider.slides.length - 1}
+                            onClick={() => {
+                              const newSlides = [...heroSlider.slides];
+                              const temp = newSlides[idx + 1];
+                              newSlides[idx + 1] = newSlides[idx];
+                              newSlides[idx] = temp;
+                              setHeroSlider({ ...heroSlider, slides: newSlides });
+                            }}
+                            className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-30 rounded hover:bg-slate-200/60"
+                            title="Move Down"
+                          >
+                            <ArrowDown className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newSlides = heroSlider.slides.filter((_: any, i: number) => i !== idx);
+                              setHeroSlider({ ...heroSlider, slides: newSlides });
+                            }}
+                            className="p-1 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded transition ml-1"
+                            title="Delete Slide"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <ImageUploader
+                            label="Desktop Banner Image (1920x800 recommended)"
+                            value={slide.desktop_image_url || ""}
+                            onChange={(url) => {
+                              const newSlides = [...heroSlider.slides];
+                              newSlides[idx] = { ...slide, desktop_image_url: url as string };
+                              setHeroSlider({ ...heroSlider, slides: newSlides });
+                            }}
+                            bucket="branding"
+                            helperText="High-res banner for laptops & desktops"
+                          />
+                        </div>
+
+                        <div>
+                          <ImageUploader
+                            label="Mobile Banner Image (800x800 or 800x1000)"
+                            value={slide.mobile_image_url || ""}
+                            onChange={(url) => {
+                              const newSlides = [...heroSlider.slides];
+                              newSlides[idx] = { ...slide, mobile_image_url: url as string };
+                              setHeroSlider({ ...heroSlider, slides: newSlides });
+                            }}
+                            bucket="branding"
+                            helperText="Mobile vertical/square ratio banner"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                        <div className="sm:col-span-2">
+                          <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                            Click Destination URL (e.g. /products or /products/darjeeling-first-flush)
+                          </label>
+                          <input
+                            type="text"
+                            value={slide.link_url || ""}
+                            onChange={(e) => {
+                              const newSlides = [...heroSlider.slides];
+                              newSlides[idx] = { ...slide, link_url: e.target.value };
+                              setHeroSlider({ ...heroSlider, slides: newSlides });
+                            }}
+                            placeholder="/products"
+                            className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 text-slate-900 rounded-lg focus:outline-none focus:border-emerald-500"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                            Alt / Title Label
+                          </label>
+                          <input
+                            type="text"
+                            value={slide.alt_text || ""}
+                            onChange={(e) => {
+                              const newSlides = [...heroSlider.slides];
+                              newSlides[idx] = { ...slide, alt_text: e.target.value };
+                              setHeroSlider({ ...heroSlider, slides: newSlides });
+                            }}
+                            placeholder="Makaibari Summer Flush"
+                            className="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 text-slate-900 rounded-lg focus:outline-none focus:border-emerald-500"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 pt-1">
+                        <input
+                          type="checkbox"
+                          id={`slide-active-${idx}`}
+                          checked={slide.is_active !== false}
+                          onChange={(e) => {
+                            const newSlides = [...heroSlider.slides];
+                            newSlides[idx] = { ...slide, is_active: e.target.checked };
+                            setHeroSlider({ ...heroSlider, slides: newSlides });
+                          }}
+                          className="w-3.5 h-3.5 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500"
+                        />
+                        <label htmlFor={`slide-active-${idx}`} className="text-[11px] text-slate-700 select-none font-medium">
+                          Slide Active (displayed in storefront slider)
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="flex justify-end pt-3 border-t border-slate-100">
+                <button
+                  type="button"
+                  disabled={saving}
+                  onClick={() => handleSaveGroup("hero_slider", heroSlider, true)}
+                  className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-xs flex items-center gap-1.5 transition disabled:opacity-50"
+                >
+                  {saving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  Save Hero Slider
+                </button>
+              </div>
+            </div>
           )}
 
           {/* TAB 2: SEO */}

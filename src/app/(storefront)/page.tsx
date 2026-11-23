@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { ProductCardData } from "@/components/storefront/ProductCard";
-import { HomeHeroSequence } from "@/components/storefront/HomeHeroSequence";
-import { CategorySlider } from "@/components/storefront/CategorySlider";
+import { HomeHeroSlider } from "@/components/storefront/HomeHeroSlider";
 import { HomeProductShowcase } from "@/components/storefront/HomeProductShowcase";
 import { EstateParallaxSection } from "@/components/storefront/EstateParallaxSection";
 import { ReserveClubSection } from "@/components/storefront/ReserveClubSection";
@@ -23,10 +22,12 @@ export default async function StorefrontHomePage() {
   const admin = createSupabaseAdminClient();
 
   const [
+    { data: heroSliderRow },
     { data: products },
     { data: categories },
     { data: reviews },
   ] = await Promise.all([
+    admin.from("settings").select("value").eq("key", "hero_slider").maybeSingle(),
     admin
       .from("products")
       .select(
@@ -57,25 +58,26 @@ export default async function StorefrontHomePage() {
   }));
 
   const activeProducts = (products || []) as unknown as ProductCardData[];
+  const heroSlides = heroSliderRow?.value?.slides || [];
 
   return (
-    <div className="pb-24">
-      {/* 1. CINEMATIC SCROLL-DRIVEN 2026 HERO */}
-      <HomeHeroSequence />
+    <div className="pb-24 font-sans">
+      {/* 1. IMAGE-ONLY HERO SLIDER (Configurable from Admin for Desktop & Mobile) */}
+      <HomeHeroSlider slides={heroSlides} />
 
       {/* 2. BRAND ASSURANCE / FOUR-PILLAR TRUST STRIP */}
       <section className="border-y border-stone-200/80 bg-stone-50/70">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 py-4 sm:py-5">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-brand-100/70 text-brand-800 flex items-center justify-center shrink-0">
                 <Leaf className="w-5 h-5 text-brand-700" />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-stone-900 font-serif">
-                  100% Whole Leaf
+                <h4 className="text-xs sm:text-sm font-semibold text-stone-900 font-sans">
+                  Artisanal Whole Leaf
                 </h4>
-                <p className="text-[11px] text-stone-500">Zero dust or sweepings</p>
+                <p className="text-[11px] text-stone-500">Carefully hand-plucked harvest</p>
               </div>
             </div>
 
@@ -84,7 +86,7 @@ export default async function StorefrontHomePage() {
                 <Sparkles className="w-5 h-5 text-amber-700" />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-stone-900 font-serif">
+                <h4 className="text-xs sm:text-sm font-semibold text-stone-900 font-sans">
                   Direct From Garden
                 </h4>
                 <p className="text-[11px] text-stone-500">Makaibari, Assam &amp; Nilgiri</p>
@@ -96,10 +98,10 @@ export default async function StorefrontHomePage() {
                 <PackageCheck className="w-5 h-5 text-emerald-700" />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-stone-900 font-serif">
+                <h4 className="text-xs sm:text-sm font-semibold text-stone-900 font-sans">
                   Nitrogen Fresh Pack
                 </h4>
-                <p className="text-[11px] text-stone-500">Multi-layer UV protection</p>
+                <p className="text-[11px] text-stone-500">Multi-layer barrier protection</p>
               </div>
             </div>
 
@@ -108,21 +110,18 @@ export default async function StorefrontHomePage() {
                 <Truck className="w-5 h-5 text-stone-700" />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-stone-900 font-serif">
+                <h4 className="text-xs sm:text-sm font-semibold text-stone-900 font-sans">
                   Pan-India Express
                 </h4>
-                <p className="text-[11px] text-stone-500">Dispatched within 24 hours</p>
+                <p className="text-[11px] text-stone-500">Fast, reliable insured courier</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="space-y-12 sm:space-y-20 pt-8 sm:pt-14">
-        {/* 3. HORIZONTAL CATEGORY SLIDER (Left-to-right scroll with ~3.5 cards) */}
-        <CategorySlider categories={activeCategories} />
-
-        {/* 4. FEATURED PRODUCTS & CATEGORY TAB SHOWCASE */}
+      <div className="space-y-12 sm:space-y-20 pt-6 sm:pt-10">
+        {/* 3. FEATURED PRODUCTS & CATEGORY TAB SHOWCASE (Collections slider removed per request) */}
         <HomeProductShowcase
           products={activeProducts}
           categories={activeCategories}

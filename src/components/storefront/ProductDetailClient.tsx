@@ -198,21 +198,43 @@ export function ProductDetailClient({
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : "5.0";
 
+  // Safe Category resolution (whether returned as object or array)
+  const primaryCategory = Array.isArray(product.categories)
+    ? product.categories[0]
+    : product.categories;
+  const categoryName = primaryCategory?.name;
+  const categorySlug = primaryCategory?.slug;
+
   return (
-    <div className="space-y-16 lg:space-y-24 text-stone-900">
-      {/* 0. Elegant Breadcrumbs */}
-      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-stone-500 font-medium">
-        <Link href="/" className="hover:text-brand-800 transition">Home</Link>
-        <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-        {product.categories?.name ? (
+    <div className="space-y-16 lg:space-y-24 text-stone-900 font-sans">
+      {/* 0. Robust & Schema-Compliant Breadcrumbs */}
+      <nav
+        aria-label="Breadcrumb"
+        className="flex items-center gap-1.5 sm:gap-2 text-xs text-stone-500 font-medium overflow-x-auto no-scrollbar py-1"
+      >
+        <Link href="/" className="hover:text-brand-800 transition shrink-0">
+          Home
+        </Link>
+        <ChevronRight className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+        
+        <Link href="/products" className="hover:text-brand-800 transition shrink-0">
+          Shop All Teas
+        </Link>
+
+        {categoryName && (
           <>
-            <Link href={`/category/${product.categories.slug || "tea"}`} className="hover:text-brand-800 transition">
-              {product.categories.name}
+            <ChevronRight className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+            <Link
+              href={`/category/${categorySlug || "tea"}`}
+              className="hover:text-brand-800 transition shrink-0"
+            >
+              {categoryName}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
           </>
-        ) : null}
-        <span className="text-stone-800 font-semibold truncate max-w-[200px] sm:max-w-none">
+        )}
+
+        <ChevronRight className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+        <span className="text-stone-900 font-semibold truncate max-w-[220px] sm:max-w-md">
           {product.name}
         </span>
       </nav>

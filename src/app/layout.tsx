@@ -1,8 +1,23 @@
 import type { Metadata } from "next";
+import { Poppins, Montserrat } from "next/font/google";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import "./globals.css";
 
 export const dynamic = "force-dynamic";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const admin = createSupabaseAdminClient();
@@ -50,13 +65,16 @@ export default async function RootLayout({
   const faviconUrl = general.favicon_url || "/favicon.ico";
 
   return (
-    <html lang="en" className="h-full antialiased scroll-smooth">
+    <html
+      lang="en"
+      className={`h-full antialiased scroll-smooth ${poppins.variable} ${montserrat.variable}`}
+    >
       <head>
         <link rel="icon" href={faviconUrl} sizes="any" />
         <link rel="shortcut icon" href={faviconUrl} />
         <link rel="apple-touch-icon" href={faviconUrl} />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );
 }

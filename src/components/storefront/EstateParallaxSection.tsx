@@ -62,8 +62,8 @@ export function EstateParallaxSection() {
               <p className="text-[10px] text-stone-300">Plucking to pack</p>
             </div>
             <div>
-              <div className="text-lg font-bold font-serif text-white">100% Pure</div>
-              <p className="text-[10px] text-stone-300">Zero added oils</p>
+              <div className="text-lg font-bold font-serif text-white">Artisanal</div>
+              <p className="text-[10px] text-stone-300">Naturally aromatic</p>
             </div>
           </div>
 

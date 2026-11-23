@@ -33,7 +33,8 @@ const config: Config = {
         }
       },
       fontFamily: {
-        sans: ["'Plus Jakarta Sans'", "var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-poppins)", "'Poppins'", "ui-sans-serif", "system-ui", "sans-serif"],
+        montserrat: ["var(--font-montserrat)", "'Montserrat'", "sans-serif"],
         mono: ["'JetBrains Mono'", "var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
         serif: ["Georgia", "Cambria", "Times New Roman", "serif"]
       }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AboutHeroSequence } from "@/components/storefront/AboutHeroSequence";
+import { HomeHeroSequence } from "@/components/storefront/HomeHeroSequence";
 import {
   AboutPillars,
   AboutProcessTimeline,
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 
 export default function AboutUsPage() {
   return (
-    <main className="min-h-screen bg-stone-50 text-stone-900">
-      {/* Interactive Cinematic 50-Frame Scroll Sequence */}
-      <AboutHeroSequence />
+    <main className="min-h-screen bg-stone-50 text-stone-900 font-sans">
+      {/* Interactive Cinematic Scroll Sequence (Moved from Home per request) */}
+      <HomeHeroSequence />
 
       {/* Four Pillars of Pure Pour Co. */}
       <AboutPillars />

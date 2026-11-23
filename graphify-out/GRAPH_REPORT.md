@@ -1,13 +1,18 @@
-# Graph Report - tea  (2026-11-05)
+# Graph Report - tea  (2026-11-24)
 
 ## Corpus Check
-- 173 files · ~4,012,659 words
+- 174 files · ~4,014,415 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 549 nodes · 1199 edges · 42 communities (29 shown, 13 thin omitted)
+- 555 nodes · 1208 edges · 39 communities (27 shown, 12 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 85 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `e6798b3c`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Community 0|Community 0]]
@@ -33,13 +38,11 @@
 - [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 25|Community 25]]
-- [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
 - [[_COMMUNITY_Community 29|Community 29]]
 - [[_COMMUNITY_Community 30|Community 30]]
 - [[_COMMUNITY_Community 31|Community 31]]
-- [[_COMMUNITY_Community 32|Community 32]]
 - [[_COMMUNITY_Community 33|Community 33]]
 - [[_COMMUNITY_Community 34|Community 34]]
 - [[_COMMUNITY_Community 35|Community 35]]
@@ -47,7 +50,6 @@
 - [[_COMMUNITY_Community 37|Community 37]]
 - [[_COMMUNITY_Community 38|Community 38]]
 - [[_COMMUNITY_Community 40|Community 40]]
-- [[_COMMUNITY_Community 41|Community 41]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `createSupabaseAdminClient()` - 174 edges
@@ -79,23 +81,23 @@
 ## Hyperedges (group relationships)
 - **Graphify Skill Architecture** — skill_graphify, ref_add_watch, ref_exports, ref_extraction_spec, ref_github_merge, ref_hooks, ref_query, ref_transcribe, ref_update [EXTRACTED 1.00]
 
-## Communities (42 total, 13 thin omitted)
+## Communities (39 total, 12 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.10
-Nodes (10): AdminHeader(), AdminHeaderProps, AdminLayoutShell(), AdminLayoutShellProps, AdminSidebar(), AdminSidebarProps, AdminDashboardLayout(), requireAdmin() (+2 more)
+Cohesion: 0.07
+Nodes (24): CustomerAccountPage(), CustomerAddressesPage(), POST(), OrderListManager(), OrderSummary, ReviewItem, ReviewManager(), OrderStatusBadge() (+16 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.07
-Nodes (65): PUT(), generateMetadata(), RootLayout(), sitemap(), GET(), POST(), POST(), GET() (+57 more)
+Nodes (56): PUT(), sitemap(), GET(), POST(), GET(), POST(), AdminDashboardPage(), POST() (+48 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.08
-Nodes (27): Category, CategoryManager(), Subcategory, ExpenseRow, FinanceManager(), FinanceManagerProps, FinanceOverview, InvoiceRow (+19 more)
+Cohesion: 0.07
+Nodes (33): Category, CategoryManager(), Subcategory, ExpenseRow, FinanceManager(), FinanceManagerProps, FinanceOverview, InvoiceRow (+25 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.06
@@ -117,13 +119,17 @@ Nodes (4): applied, client, files, migrationsDir
 Cohesion: 0.22
 Nodes (8): graphify reference: extra exports and benchmark, Step 6b - Wiki (only if --wiki flag), Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag), Step 7a - FalkorDB export (only if --falkordb or --falkordb-push flag), Step 7b - SVG export (only if --svg flag), Step 7c - GraphML export (only if --graphml flag), Step 7d - MCP server (only if --mcp flag), Step 8 - Token reduction benchmark (only if total_words > 5000)
 
+### Community 14 - "Community 14"
+Cohesion: 0.23
+Nodes (8): AdminHeader(), AdminHeaderProps, AdminLayoutShell(), AdminLayoutShellProps, AdminSidebar(), AdminSidebarProps, AdminDashboardLayout(), requireAdmin()
+
 ### Community 15 - "Community 15"
 Cohesion: 0.33
 Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
 
 ### Community 16 - "Community 16"
-Cohesion: 0.07
-Nodes (47): CustomerAccountPage(), POST(), COURIER_PRESETS, OrderDetailManager(), OrderDetailProps, OrderListManager(), OrderSummary, PrintButton() (+39 more)
+Cohesion: 0.09
+Nodes (38): PrintButton(), CartPage(), POST(), POST(), POST(), CustomerDetailPage(), AdminOrderInvoicePage(), CustomerOrderInvoicePage() (+30 more)
 
 ### Community 17 - "Community 17"
 Cohesion: 0.50
@@ -138,12 +144,8 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ### Community 25 - "Community 25"
-Cohesion: 0.07
-Nodes (29): SettingsManager(), SettingsMap, CategoriesClient(), CategoryItem, ProductRelationItem, SubcategoryItem, CategoriesOverviewPage(), metadata (+21 more)
-
-### Community 26 - "Community 26"
-Cohesion: 0.29
-Nodes (7): metadata, AboutHeroSequence(), AboutCtaSection(), AboutFounderNote(), AboutImpactStats(), AboutPillars(), AboutProcessTimeline()
+Cohesion: 0.09
+Nodes (21): CategoriesClient(), CategoryItem, ProductRelationItem, SubcategoryItem, CategoriesOverviewPage(), metadata, ContactClient(), ContactInfoProps (+13 more)
 
 ### Community 27 - "Community 27"
 Cohesion: 0.24
@@ -162,38 +164,30 @@ Cohesion: 0.47
 Nodes (4): CouponItem, CouponManager(), AdminCouponsPage(), metadata
 
 ### Community 31 - "Community 31"
-Cohesion: 0.47
-Nodes (4): FaqItem, FaqManager(), AdminFaqsPage(), metadata
-
-### Community 32 - "Community 32"
-Cohesion: 0.60
-Nodes (3): CustomerAddressesPage(), AddressItem, CustomerAddressManager()
+Cohesion: 0.14
+Nodes (11): CustomerList(), CustomerRow, FaqItem, FaqManager(), generateMetadata(), montserrat, poppins, RootLayout() (+3 more)
 
 ### Community 37 - "Community 37"
 Cohesion: 0.47
 Nodes (4): InquiryItem, InquiryManager(), AdminInquiriesPage(), metadata
 
 ### Community 40 - "Community 40"
-Cohesion: 0.10
-Nodes (20): metadata, ProductsCatalogPage(), CategoryDetailPage(), CategoryPageProps, generateMetadata(), ProductsPageProps, BrewingRitualSection(), STEPS (+12 more)
-
-### Community 41 - "Community 41"
-Cohesion: 0.60
-Nodes (3): CustomerList(), CustomerRow, CustomersPage()
+Cohesion: 0.07
+Nodes (30): metadata, metadata, ProductsCatalogPage(), CategoryDetailPage(), CategoryPageProps, generateMetadata(), ProductsPageProps, AboutHeroSequence() (+22 more)
 
 ## Knowledge Gaps
-- **161 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+156 more)
+- **165 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+160 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createSupabaseAdminClient()` connect `Community 2` to `Community 32`, `Community 1`, `Community 3`, `Community 37`, `Community 40`, `Community 41`, `Community 14`, `Community 16`, `Community 25`, `Community 28`, `Community 29`, `Community 30`, `Community 31`?**
-  _High betweenness centrality (0.256) - this node is a cross-community bridge._
-- **Why does `env()` connect `Community 1` to `Community 16`, `Community 2`?**
-  _High betweenness centrality (0.030) - this node is a cross-community bridge._
-- **Why does `formatCurrency()` connect `Community 16` to `Community 2`, `Community 3`, `Community 40`, `Community 41`, `Community 28`, `Community 30`?**
+- **Why does `createSupabaseAdminClient()` connect `Community 2` to `Community 1`, `Community 3`, `Community 37`, `Community 40`, `Community 14`, `Community 16`, `Community 25`, `Community 28`, `Community 29`, `Community 30`, `Community 31`?**
+  _High betweenness centrality (0.273) - this node is a cross-community bridge._
+- **Why does `env()` connect `Community 1` to `Community 2`?**
+  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+- **Why does `formatCurrency()` connect `Community 16` to `Community 1`, `Community 2`, `Community 3`, `Community 40`, `Community 28`, `Community 30`, `Community 31`?**
   _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **Are the 42 inferred relationships involving `createSupabaseAdminClient()` (e.g. with `CategoriesOverviewPage()` and `CategoriesPage()`) actually correct?**
   _`createSupabaseAdminClient()` has 42 INFERRED edges - model-reasoned connections that need verification._
