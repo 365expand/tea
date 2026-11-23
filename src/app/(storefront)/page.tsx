@@ -5,14 +5,13 @@ import { HomeHeroSlider } from "@/components/storefront/HomeHeroSlider";
 import { HomeProductShowcase } from "@/components/storefront/HomeProductShowcase";
 import { EstateParallaxSection } from "@/components/storefront/EstateParallaxSection";
 import { ReserveClubSection } from "@/components/storefront/ReserveClubSection";
+import { WhyUsSection } from "@/components/storefront/WhyUsSection";
+import { HomeTestimonialsSection } from "@/components/storefront/HomeTestimonialsSection";
 import {
   ShieldCheck,
   Truck,
   Leaf,
   Sparkles,
-  Star,
-  CheckCircle2,
-  ArrowRight,
   PackageCheck,
 } from "lucide-react";
 
@@ -127,92 +126,16 @@ export default async function StorefrontHomePage() {
           categories={activeCategories}
         />
 
+        {/* 4. WHY US / THE TERROIR DISTINCTION SECTION */}
+        <WhyUsSection />
+
         {/* 5. TERROIR SOURCING PARALLAX BANNER */}
         <EstateParallaxSection />
 
-        {/* 6. VERIFIED CONNOISSEUR TESTIMONIALS */}
-        {reviews && reviews.length > 0 && (
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-            <div className="text-center max-w-xl mx-auto mb-10">
-              <span className="text-xs font-semibold tracking-widest uppercase text-stone-500 block mb-1">
-                Customer Endorsements
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-bold text-stone-900 tracking-tight font-serif">
-                What True Tea Drinkers Say
-              </h2>
-              <p className="text-xs sm:text-sm text-stone-600 mt-1.5 font-light">
-                Honest feedback from morning brew rituals across every corner of India.
-              </p>
-            </div>
+        {/* 6. VERIFIED CONNOISSEUR TESTIMONIALS (Modern, Dynamic, Mobile-Friendly) */}
+        <HomeTestimonialsSection reviews={reviews as any} />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reviews.map((rev) => (
-                <div
-                  key={rev.id}
-                  className="bg-white border border-stone-200/90 rounded-2xl p-6 sm:p-7 shadow-xs hover:border-brand-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between space-y-4"
-                >
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-amber-500 gap-1">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-3.5 h-3.5 ${
-                              i < rev.rating
-                                ? "fill-amber-400 text-amber-400"
-                                : "text-stone-300"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="inline-flex items-center gap-1 text-[10px] font-mono font-medium text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full">
-                        <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" />
-                        Verified Buyer
-                      </span>
-                    </div>
-
-                    <h4 className="font-bold text-sm text-stone-900 font-serif">
-                      {rev.title}
-                    </h4>
-
-                    <p className="text-xs text-stone-600 leading-relaxed italic">
-                      &ldquo;{rev.body}&rdquo;
-                    </p>
-                  </div>
-
-                  <div className="pt-3.5 border-t border-stone-100 flex items-center justify-between text-xs">
-                    <div>
-                      <span className="font-semibold text-stone-900 block text-xs">
-                        {rev.customer_name}
-                      </span>
-                      <span className="text-[10px] text-stone-400 font-mono">
-                        Direct Purveyor
-                      </span>
-                    </div>
-                    <span className="text-brand-800 font-medium text-[11px] truncate max-w-[140px] text-right">
-                      {Array.isArray(rev.products)
-                        ? (rev.products[0] as any)?.name
-                        : (rev.products as any)?.name || "Reserve Flush"}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Bottom link to contact or feedback */}
-            <div className="mt-10 text-center">
-              <Link
-                href="/products"
-                className="inline-flex items-center gap-2 px-8 py-3.5 bg-stone-900 hover:bg-stone-800 active:scale-95 text-white text-xs sm:text-sm font-semibold rounded-full shadow-md hover:shadow-lg transition"
-              >
-                <span>Find Your Morning Tea</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </section>
-        )}
-
-        {/* 8. THE RESERVE SOCIETY (Private cellar allocations & rare harvest alerts) */}
+        {/* 7. THE RESERVE SOCIETY (Private cellar allocations & rare harvest alerts) */}
         <ReserveClubSection />
       </div>
     </div>

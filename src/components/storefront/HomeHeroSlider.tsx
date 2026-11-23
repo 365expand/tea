@@ -103,7 +103,7 @@ export function HomeHeroSlider({ slides = [] }: HomeHeroSliderProps) {
   };
 
   const slideContent = (
-    <picture className="block w-full h-full">
+    <picture className="block w-full h-full pointer-events-none select-none">
       {currentSlide.mobile_image_url && (
         <source
           media="(max-width: 640px)"
@@ -113,8 +113,9 @@ export function HomeHeroSlider({ slides = [] }: HomeHeroSliderProps) {
       <img
         src={currentSlide.desktop_image_url}
         alt={currentSlide.alt_text || "Pure Pour Co. artisanal tea banner"}
-        className="w-full h-full object-cover object-center select-none"
+        className="w-full h-full object-cover object-center pointer-events-none select-none"
         loading="eager"
+        draggable={false}
       />
     </picture>
   );

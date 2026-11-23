@@ -71,10 +71,10 @@ export function StoreHeader({
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentY = window.scrollY;
-          // Hysteresis: activate at > 40px, deactivate at < 15px to prevent oscillation
+          // Wide hysteresis: activate at > 75px, deactivate at < 20px to prevent any oscillation or vibration
           setIsScrolled((prev) => {
-            if (!prev && currentY > 40) return true;
-            if (prev && currentY < 15) return false;
+            if (!prev && currentY > 75) return true;
+            if (prev && currentY < 20) return false;
             return prev;
           });
           ticking = false;
@@ -169,15 +169,19 @@ export function StoreHeader({
         )}
       </AnimatePresence>
 
-      {/* 2. Main Navigation Bar (Full Width with Luxury Spacing, Zero Blink) */}
+      {/* 2. Main Navigation Bar (Full Width with Luxury Spacing, Zero Transparency on Mobile, Smooth Compact Transition) */}
       <div
-        className={`w-full transition-all duration-200 ${
+        className={`w-full bg-white transition-shadow duration-300 ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-md border-b border-stone-200/90 shadow-xs"
-            : "bg-white border-b border-stone-200"
+            ? "border-b border-stone-200/90 shadow-sm"
+            : "border-b border-stone-200"
         }`}
       >
-        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 h-16 sm:h-18 flex items-center justify-between gap-3 sm:gap-6">
+        <div
+          className={`w-full px-4 sm:px-6 lg:px-10 xl:px-14 flex items-center justify-between gap-3 sm:gap-6 transition-[height] duration-300 ease-out ${
+            isScrolled ? "h-14" : "h-15 sm:h-18"
+          }`}
+        >
           {/* Left: Mobile hamburger & Brand Logo */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <button
@@ -189,7 +193,7 @@ export function StoreHeader({
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            {/* Logo Area: Montserrat 300, no subtitle, clean balanced alignment */}
+            {/* Logo Area: Montserrat Medium (400-500 weight), no subtitle, clean balanced alignment */}
             <Link href="/" className="flex items-center gap-2.5 group py-1">
               {generalSettings?.logo_url ? (
                 <img
@@ -202,7 +206,7 @@ export function StoreHeader({
                   <Leaf className="w-4 h-4" />
                 </div>
               )}
-              <span className="font-montserrat font-light text-base sm:text-lg lg:text-xl text-stone-900 tracking-wide leading-none transition-colors group-hover:text-brand-900">
+              <span className="font-montserrat font-medium text-base sm:text-lg lg:text-xl text-stone-900 tracking-normal sm:tracking-wide leading-none transition-colors group-hover:text-brand-900">
                 {websiteName}
               </span>
             </Link>
@@ -455,7 +459,7 @@ export function StoreHeader({
         )}
       </AnimatePresence>
 
-      {/* 4. Enhanced Mobile Menu Drawer */}
+      {/* 4. Enhanced Mobile Menu Drawer (Solid Opaque White Background) */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -463,7 +467,7 @@ export function StoreHeader({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22 }}
-            className="md:hidden border-t border-stone-200 bg-white/98 backdrop-blur-md px-5 py-5 space-y-4 shadow-2xl overflow-hidden"
+            className="md:hidden border-t border-stone-200 bg-white px-5 py-5 space-y-4 shadow-2xl overflow-hidden"
           >
             {/* Primary Mobile Navigation Links */}
             <nav className="space-y-1">
